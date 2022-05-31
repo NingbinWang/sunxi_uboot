@@ -196,7 +196,7 @@ int board_init(void)
 
 	gd->bd->bi_boot_params = (PHYS_SDRAM_0 + 0x100);
 
-#ifndef CONFIG_ARM64
+#if !defined(CONFIG_ARM64) && !defined(CONFIG_MACH_SUNIV)
 	asm volatile("mrc p15, 0, %0, c0, c1, 1" : "=r"(id_pfr1));
 	debug("id_pfr1: 0x%08x\n", id_pfr1);
 	/* Generic Timer Extension available? */
@@ -223,7 +223,7 @@ int board_init(void)
 #endif
 		}
 	}
-#endif /* !CONFIG_ARM64 */
+#endif /* !CONFIG_ARM64 && !CONFIG_MACH_SUNIV */
 
 	ret = axp_gpio_init();
 	if (ret)
@@ -370,16 +370,18 @@ void board_nand_init(void)
 #ifdef CONFIG_MMC
 static void mmc_pinmux_setup(int sdc)
 {
-	unsigned int pin;
+	__maybe_unused unsigned int pin;
 
 	switch (sdc) {
 	case 0:
 		/* SDC0: PF0-PF5 */
+#ifndef CONFIG_UART0_PORT_F
 		for (pin = SUNXI_GPF(0); pin <= SUNXI_GPF(5); pin++) {
 			sunxi_gpio_set_cfgpin(pin, SUNXI_GPF_SDC0);
 			sunxi_gpio_set_pull(pin, SUNXI_GPIO_PULL_UP);
 			sunxi_gpio_set_drv(pin, 2);
 		}
+#endif
 		break;
 
 	case 1:
@@ -420,6 +422,12 @@ static void mmc_pinmux_setup(int sdc)
 			sunxi_gpio_set_cfgpin(pin, SUN8I_GPG_SDC1);
 			sunxi_gpio_set_pull(pin, SUNXI_GPIO_PULL_UP);
 			sunxi_gpio_set_drv(pin, 2);
+		}
+#elif defined(CONFIG_MACH_SUNIV)
+		for (pin = SUNXI_GPC(0); pin <= SUNXI_GPC(2); pin++) {
+					sunxi_gpio_set_cfgpin(pin, SUNXI_GPC_SDC2);
+					sunxi_gpio_set_pull(pin, SUNXI_GPIO_PULL_UP);
+					sunxi_gpio_set_drv(pin, 2);
 		}
 #endif
 		break;
@@ -828,6 +836,18 @@ static void setup_environment(const void *fdt)
 		env_set("serial#", serial_string);
 	}
 }
+#ifdef CONFIG_USB_GADGET
+static int usb_gadget_init(void)
+{
+	int ret;
+	struct udevice *usb_dev;
+	ret = uclass_first_device(UCLASS_USB_GADGET_GENERIC, &usb_dev);
+	if (!usb_dev || ret) {
+		pr_err("No USB gadget device found\n");
+	}
+	return ret;
+}
+#endif
 
 int misc_init_r(void)
 {
@@ -849,7 +869,20 @@ int misc_init_r(void)
 	} else if (boot == BOOT_DEVICE_MMC2) {
 		env_set("mmc_bootdev", "1");
 	}
-
+    switch (boot) {
+		case BOOT_DEVICE_MMC1:
+			env_set("boot_device", "mmc0");
+			break;
+		case BOOT_DEVICE_MMC2:
+			env_set("boot_device", "mmc1");
+			break;
+		case BOOT_DEVICE_SPI:
+			env_set("boot_device", "spi");
+			break;
+		default:
+			env_set("boot_device", "fel");
+			break;
+	}
 	/* Set fdtfile to match the FIT configuration chosen in SPL. */
 	spl_dt_name = get_spl_dt_name();
 	if (spl_dt_name) {
@@ -870,7 +903,9 @@ int board_late_init(void)
 #ifdef CONFIG_USB_ETHER
 	usb_ether_init();
 #endif
-
+#ifdef CONFIG_USB_GADGET
+	usb_gadget_init();
+#endif
 	return 0;
 }
 

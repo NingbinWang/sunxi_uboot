@@ -157,7 +157,11 @@ enum sunxi_gpio_number {
 
 #define SUNXI_GPC_NAND		2
 #define SUNXI_GPC_SPI0		3
+#define SUNIV_GPE_UART0		5
 #define SUNXI_GPC_SDC2		3
+#ifdef CONFIG_MACH_SUNIV
+#define SUNIV_GPC_SPI0		2
+#endif
 #define SUN6I_GPC_SDC3		4
 #define SUN50I_GPC_SPI0		4
 
