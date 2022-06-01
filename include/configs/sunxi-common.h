@@ -206,7 +206,7 @@
  * 32M uncompressed kernel, 16M compressed kernel, 1M fdt,
  * 1M script, 1M pxe, 1M dt overlay and the ramdisk at the end.
  */
-#ifndef CONFIG_MACH_SUN8I_V3S
+#if defined(CONFIG_MACH_SUN8I_V3S)
 #define BOOTM_SIZE        __stringify(0xa000000)
 #define KERNEL_ADDR_R     __stringify(SDRAM_OFFSET(2000000))
 #define FDT_ADDR_R        __stringify(SDRAM_OFFSET(3000000))

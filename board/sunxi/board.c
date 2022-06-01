@@ -662,7 +662,7 @@ void sunxi_board_init(void)
 	power_failed |= axp_set_sw(IS_ENABLED(CONFIG_AXP_SW_ON));
 #endif
 #endif
-	printf("DRAM:");
+	printf("DRAM(spl):");
 	gd->ram_size = sunxi_dram_init();
 	printf(" %d MiB\n", (int)(gd->ram_size >> 20));
 	if (!gd->ram_size)
