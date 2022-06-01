@@ -347,6 +347,7 @@ static const struct udevice_id sunxi_gpio_ids[] = {
 	ID("allwinner,sun50i-a64-r-pinctrl",	l_1),
 	ID("allwinner,sun50i-h6-r-pinctrl",	l_2),
 	ID("allwinner,sun50i-h616-r-pinctrl",	l_1),
+	ID("allwinner,suniv-pinctrl",	a_all),
 	{ }
 };
 
