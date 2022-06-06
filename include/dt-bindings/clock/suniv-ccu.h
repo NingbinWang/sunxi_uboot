@@ -13,6 +13,7 @@
 #define CLK_BUS_MMC1		15
 #define CLK_BUS_DRAM		16
 #define CLK_BUS_SPI0		17
+#define CLK_BUS_NAND		17
 #define CLK_BUS_SPI1		18
 #define CLK_BUS_OTG		19
 #define CLK_BUS_VE		20
