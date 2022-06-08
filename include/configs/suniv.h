@@ -12,6 +12,6 @@
  */
 #include <configs/sunxi-common.h>
 
-#define CONFIG_SYS_DFU_DATA_BUF_SIZE (512*1024)
+//#define CONFIG_SYS_DFU_DATA_BUF_SIZE (512*1024)
 
 #endif /* __CONFIG_H */

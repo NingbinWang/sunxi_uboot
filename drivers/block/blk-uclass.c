@@ -413,7 +413,10 @@ int blk_find_device(int if_type, int devnum, struct udevice **devp)
 		return ret;
 	uclass_foreach_dev(dev, uc) {
 		struct blk_desc *desc = dev_get_uclass_plat(dev);
-
+		// how to fix desc->num? why desc->devnum is 2???? +++++++++++++++
+               if(devnum == 0 && desc->devnum == 2)
+                   desc->devnum = 0;
+        //----------------------         
 		debug("%s: if_type=%d, devnum=%d: %s, %d, %d\n", __func__,
 		      if_type, devnum, dev->name, desc->if_type, desc->devnum);
 		if (desc->if_type == if_type && desc->devnum == devnum) {

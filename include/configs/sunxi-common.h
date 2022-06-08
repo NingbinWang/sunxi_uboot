@@ -225,6 +225,7 @@
 #define FDT_ADDR_R     __stringify(SDRAM_OFFSET(0C00000))
 #define SCRIPT_ADDR_R  __stringify(SDRAM_OFFSET(0C50000))
 #define PXEFILE_ADDR_R __stringify(SDRAM_OFFSET(0D00000))
+#define FDTOVERLAY_ADDR_R __stringify(SDRAM_OFFSET(0D20000))
 #define RAMDISK_ADDR_R __stringify(SDRAM_OFFSET(0D50000))
 #else
 /*
