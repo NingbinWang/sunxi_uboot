@@ -41,7 +41,7 @@
 		};
 	};
 
-	soc {
+	soc@01c00000 {
 		compatible = "simple-bus";
 		#address-cells = <1>;
 		#size-cells = <1>;
@@ -118,7 +118,7 @@
 				function = "uart0";
 			};
 
-			uart1_pins_a: uart1-pins {
+			uart1_pins_a: uart1-pins-pa {
 				pins = "PA2", "PA3";
 				function = "uart1";
 			};

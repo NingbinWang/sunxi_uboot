@@ -335,7 +335,19 @@ static enum flashtype spi0_get_flash_type(void)
 		type = FLASHTYPE_NOR;
 		spi0_transmit("\x9f\x00", 2, chipid, 2); // Read Chip ID
 		if (!memcmp(chipid, "\xc8\xf1", 2)) {
-			printf("SPI-NAND: GigaDevice GD5F1GQ4UAxxG\n");
+			printf("SPI-NAND: GigaDevice GD5F1GQ4UAYIG\n");
+			type = FLASHTYPE_NAND;
+		}
+		else if (!memcmp(chipid, "\xc8\x51", 2)) {
+			printf("SPI-NAND: GigaDevice GD5F1GQ5UEYIG\n");
+			type = FLASHTYPE_NAND;
+		}
+		else if (!memcmp(chipid, "\xef\xaa", 2)) {
+			printf("SPI-NAND: Winbond W25N01G\n");
+			type = FLASHTYPE_NAND;
+		}
+		else if (!memcmp(chipid, "\xef\xab", 2)) {
+			printf("SPI-NAND: Winbond W25M02GV\n");
 			type = FLASHTYPE_NAND;
 		}
 	}

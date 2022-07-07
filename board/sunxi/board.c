@@ -859,6 +859,7 @@ int misc_init_r(void)
 	env_set("mmc_bootdev", NULL);
 
 	boot = sunxi_get_boot_device();
+	printf("sunxi_get_boot_device:%x\n",boot);
 	/* determine if we are running in FEL mode */
 	if (boot == BOOT_DEVICE_BOARD) {
 		env_set("fel_booted", "1");
@@ -906,6 +907,9 @@ int board_late_init(void)
 #ifdef CONFIG_USB_GADGET
 	usb_gadget_init();
 #endif
+	//if(env_get("bootcmd") == NULL){
+	//	env_set("bootcmd", CONFIG_BOOTCOMMAND);
+	//}
 	return 0;
 }
 
