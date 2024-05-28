@@ -849,6 +849,14 @@ static int usb_gadget_init(void)
 }
 #endif
 
+#if 1
+//use fat32 get image in order to update flash
+int autoupdate(void)
+{
+   
+}
+#endif
+
 int misc_init_r(void)
 {
 	const char *spl_dt_name;
@@ -859,7 +867,7 @@ int misc_init_r(void)
 	env_set("mmc_bootdev", NULL);
 
 	boot = sunxi_get_boot_device();
-	printf("sunxi_get_boot_device:%x\n",boot);
+	printf("sunxi_get_boot_device:%d\n",boot);
 	/* determine if we are running in FEL mode */
 	if (boot == BOOT_DEVICE_BOARD) {
 		env_set("fel_booted", "1");
@@ -884,6 +892,9 @@ int misc_init_r(void)
 			env_set("boot_device", "fel");
 			break;
 	}
+	#if 1
+	
+	#endif
 	/* Set fdtfile to match the FIT configuration chosen in SPL. */
 	spl_dt_name = get_spl_dt_name();
 	if (spl_dt_name) {

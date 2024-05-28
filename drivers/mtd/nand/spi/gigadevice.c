@@ -257,7 +257,7 @@ static int gigadevice_spinand_detect(struct spinand_device *spinand)
 	 */
 	if (id[1] != SPINAND_MFR_GIGADEVICE)
 		return 0;
-
+    printf("gigadevice_spinand_detect\n");
 	ret = spinand_match_and_init(spinand, gigadevice_spinand_table,
 				     ARRAY_SIZE(gigadevice_spinand_table),
 				     id[2]);

@@ -71,5 +71,5 @@
 };
 
 &mmc2 {
-	status = "okay";
+	status = "disabled";
 };

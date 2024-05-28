@@ -638,8 +638,8 @@ static int boot_from_devices(struct spl_image_info *spl_image,
 		    CONFIG_IS_ENABLED(LIBCOMMON_SUPPORT) &&
 		    !IS_ENABLED(CONFIG_SILENT_CONSOLE)) {
 			if (loader){
-				printf("Trying to boot from %s\n",
-				       spl_loader_name(loader));
+				printf("Trying to boot from %s,bootnume:%d\n",
+				       spl_loader_name(loader),spl_boot_list[i]);
 #ifdef CONFIG_MACH_SUNIV
 			    switch (spl_boot_list[i]) {
 				  case BOOT_DEVICE_MMC1:
@@ -702,6 +702,7 @@ void board_init_r(gd_t *dummy1, ulong dummy2)
 	int ret;
 
 	debug(">>" SPL_TPL_PROMPT "board_init_r()\n");
+    puts(SPL_TPL_PROMPT "board_init_r\n");
 
 	spl_set_bd();
 
@@ -792,6 +793,7 @@ void board_init_r(gd_t *dummy1, ulong dummy2)
 #endif
 	switch (spl_image.os) {
 	case IH_OS_U_BOOT:
+		puts("Jumping to uboot \n ");
 		debug("Jumping to %s...\n", spl_phase_name(spl_next_phase()));
 		break;
 #if CONFIG_IS_ENABLED(ATF)
