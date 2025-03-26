@@ -123,6 +123,11 @@
 				function = "uart1";
 			};
 			
+			uart1_pins_d: uart1-pins-pd {
+				pins = "PD3", "PD4";
+				function = "uart1";
+			};
+			
 			uart2_pins_e: uart2-pins-pe {
 				pins = "PE7", "PE8";
 				function = "uart2";

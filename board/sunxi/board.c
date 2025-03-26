@@ -849,14 +849,6 @@ static int usb_gadget_init(void)
 }
 #endif
 
-#if 1
-//use fat32 get image in order to update flash
-int autoupdate(void)
-{
-   
-}
-#endif
-
 int misc_init_r(void)
 {
 	const char *spl_dt_name;
@@ -892,9 +884,7 @@ int misc_init_r(void)
 			env_set("boot_device", "fel");
 			break;
 	}
-	#if 1
-	
-	#endif
+
 	/* Set fdtfile to match the FIT configuration chosen in SPL. */
 	spl_dt_name = get_spl_dt_name();
 	if (spl_dt_name) {
